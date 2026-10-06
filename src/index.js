@@ -27,7 +27,7 @@ try {
         console.log('Загружено цитат:', count);
     }
 
-    console.log('Всего цитат:', count);
+    console.log('Всегоо цитат:', count);
 
     const quotes = await page.$$eval('.quote', (els) =>
         els.map((el) => ({
