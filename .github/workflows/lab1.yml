@@ -1,0 +1,22 @@
+name: lab1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lab1/**'
+      - '.github/workflows/lab1.yml'
+  pull_request:
+    paths:
+      - 'lab1/**'
+      - '.github/workflows/lab1.yml'
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: lab1
+    steps:
+      - uses: actions/checkout@v5
+      - run: make ci
