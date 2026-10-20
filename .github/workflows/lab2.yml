@@ -1,0 +1,26 @@
+name: lab2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'lab2/**'
+      - '.github/workflows/lab2.yml'
+  pull_request:
+    paths:
+      - 'lab2/**'
+      - '.github/workflows/lab2.yml'
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: lab2
+    steps:
+      - uses: actions/checkout@v5
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.16.5
+          terraform_wrapper: false
+      - run: make ci
