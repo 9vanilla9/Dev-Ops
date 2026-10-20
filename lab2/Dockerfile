@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:1
-
 ARG PLAYWRIGHT_VERSION=1.63.0
 
 FROM node:22-bookworm AS base

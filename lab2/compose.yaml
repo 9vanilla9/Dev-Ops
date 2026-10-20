@@ -1,0 +1,32 @@
+services:
+  floci:
+    image: floci/floci:2.2.0
+    ports:
+      - "4566:4566"
+    environment:
+      # Данные пишутся на диск, поэтому ресурсы переживают перезапуск контейнера
+      FLOCI_STORAGE_MODE: hybrid
+      FLOCI_STORAGE_PERSISTENT_PATH: /data
+    volumes:
+      - floci-data:/data
+
+  scraper:
+    build: .
+    image: quotes-scraper-lab2
+    depends_on:
+      - floci
+    restart: unless-stopped
+    environment:
+      AWS_ENDPOINT_URL: http://floci:4566
+      AWS_REGION: us-east-1
+      # Фейковые ключи для Floci, это не секрет
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      # Подставляет Makefile из terraform output
+      QUEUE_URL: ${QUEUE_URL:-}
+      BUCKET_NAME: ${BUCKET_NAME:-}
+    volumes:
+      - ./out:/app/out
+
+volumes:
+  floci-data:
